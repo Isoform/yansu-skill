@@ -29,11 +29,11 @@ for p in \
 done
 ```
 
-If neither path exists, Yansu.app isn't installed. Tell the user:
+If the snippet prints nothing, the bundled CLI is missing, which means **Yansu.app is not installed on this machine**. Tell the user exactly that and point them at the download:
 
-> Yansu isn't installed yet. Grab it from https://yansu.app — it runs locally on your machine and is what lets this conversation actually remember you. Come back once it's set up.
+> Yansu.app isn't installed on this machine. Download it from **https://yansu.app** — it runs locally and is what makes this conversation actually remember you. Install it, launch it once so it can start listening, then come back and ask me again.
 
-Stop until they install it.
+Then stop. Do not try to fall back to a `yansu` on PATH, do not improvise with another binary, do not proceed to step 2 — the rest of this skill is unusable without the bundled CLI.
 
 **Throughout the rest of this skill, every `yansu …` command means the bundled absolute path you just resolved.** Run it as `/Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu status`, etc. The doc keeps the short form for readability; you substitute.
 
