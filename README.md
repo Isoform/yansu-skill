@@ -15,7 +15,26 @@
 
 [Yansu](https://yansu.app) listens, crystallizes, and quietly builds. **Yansu.skill** is how that crystallized knowledge reaches whichever agent you happen to be using — so it walks in already knowing how you actually work.
 
-[See it in action](#see-it-in-action) · [Features](#features) · [How it works](#how-it-works) · [Privacy](#privacy) · [Install](#install)
+<br>
+
+**Install** — paste this to your AI agent (Claude, Codex, Cursor, …):
+
+</div>
+
+```
+Install the Yansu skill for me:
+
+1. Fetch https://raw.githubusercontent.com/Isoform/yansu-skill/main/SKILL.md
+2. Save it to your user-level skills folder as `yansu/SKILL.md`
+   (e.g. `~/.claude/skills/yansu/SKILL.md` for Claude Code,
+   `~/.codex/skills/yansu/SKILL.md` for Codex,
+   `~/.cursor/skills/yansu/SKILL.md` for Cursor)
+3. Confirm the install path when done.
+```
+
+<div align="center">
+
+[See it in action](#see-it-in-action) · [Features](#features) · [How it works](#how-it-works) · [Privacy](#privacy)
 
 </div>
 
@@ -101,16 +120,6 @@ A skill that won't tell you what it can't do is one you can't trust.
 - **It is quiet by default** — it stays out of every turn that doesn't need it.
 
 A continuity layer that pretends to be omniscient isn't continuity. It is flattery.
-
----
-
-## Install
-
-```bash
-git clone https://github.com/Isoform/yansu-skill
-```
-
-That's it. Yansu picks it up on the next session.
 
 ---
 

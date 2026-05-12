@@ -15,7 +15,26 @@
 
 [Yansu](https://yansu.app) 在后台默默观察、结晶、动手做事。**Yansu.skill** 把这些结晶过的知识，递交给你手边任何一个 Agent —— 让它一上来就知道你是怎么工作的。
 
-[实战演示](#实战演示) · [核心特性](#核心特性) · [工作原理](#工作原理) · [隐私](#隐私) · [安装](#安装)
+<br>
+
+**安装** —— 把下面这段粘给你的 AI Agent（Claude、Codex、Cursor 都行）：
+
+</div>
+
+```
+帮我安装 Yansu skill：
+
+1. 抓取 https://raw.githubusercontent.com/Isoform/yansu-skill/main/SKILL.md
+2. 保存到你的用户级 skills 目录，路径为 `yansu/SKILL.md`
+   （例如 Claude Code 用 `~/.claude/skills/yansu/SKILL.md`，
+   Codex 用 `~/.codex/skills/yansu/SKILL.md`，
+   Cursor 用 `~/.cursor/skills/yansu/SKILL.md`）
+3. 装完确认一下安装路径。
+```
+
+<div align="center">
+
+[实战演示](#实战演示) · [核心特性](#核心特性) · [工作原理](#工作原理) · [隐私](#隐私)
 
 </div>
 
@@ -97,16 +116,6 @@ Yansu 负责听。Skill 负责递。
 - **它默认沉默** —— 不需要它的回合，它绝不冒头。
 
 一个假装无所不知的延续性，不是延续性。是奉承。
-
----
-
-## 安装
-
-```bash
-git clone https://github.com/Isoform/yansu-skill
-```
-
-就这样。下次会话 Yansu 自动加载。
 
 ---
 
