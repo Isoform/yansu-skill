@@ -42,8 +42,10 @@ Install the Yansu skill for me:
 
 ## See it in action
 
+Type `/yansu` to invoke the skill explicitly, or ask naturally and your agent will pull it in when it spots a continuity question.
+
 ```
-You      ❯ Why did that build fail again — the auth one?
+You      ❯ /yansu Why did that build fail again — the auth one?
 
 Agent    ❯ Same migration-lock issue from a few weeks back. You
            worked around it last time by running the ALTER inside
@@ -52,7 +54,7 @@ Agent    ❯ Same migration-lock issue from a few weeks back. You
 ```
 
 ```
-You      ❯ Spin up the staging database
+You      ❯ /yansu Spin up the staging database
 
 Agent    ❯ You've done this twice. Your compose template lives
            next door, and the first boot usually trips on the SSL
@@ -61,7 +63,7 @@ Agent    ❯ You've done this twice. Your compose template lives
 ```
 
 ```
-You      ❯ Pick the right tool for the job
+You      ❯ /yansu Pick the right tool for the job
 
 Agent    ❯ For this kind of task you usually reach for the same
            three. The first one fits the shape of the problem,

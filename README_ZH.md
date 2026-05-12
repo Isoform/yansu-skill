@@ -42,8 +42,10 @@
 
 ## 实战演示
 
+输入 `/yansu` 显式唤起这个 Skill，或者直接自然发问 —— Agent 识别到延续性问题时会自己拉起来。
+
 ```
-You      ❯ 那个构建又挂了——auth 那个，怎么回事？
+You      ❯ /yansu 那个构建又挂了——auth 那个，怎么回事？
 
 Agent    ❯ 还是前几周那个 migration lock 问题。上次你在事务里
            把 statement_timeout 关掉跑 ALTER 绕过去了。要不要
@@ -51,7 +53,7 @@ Agent    ❯ 还是前几周那个 migration lock 问题。上次你在事务里
 ```
 
 ```
-You      ❯ 把 staging 数据库起来
+You      ❯ /yansu 把 staging 数据库起来
 
 Agent    ❯ 这事你做过两次了。compose 模板就在隔壁，
            头一次启动经常卡在 SSL 证书路径上。
@@ -59,7 +61,7 @@ Agent    ❯ 这事你做过两次了。compose 模板就在隔壁，
 ```
 
 ```
-You      ❯ 这种活用什么工具合适
+You      ❯ /yansu 这种活用什么工具合适
 
 Agent    ❯ 这类问题你常用的就那三个。第一个最贴这个场景的形状,
            而且上周你调了 flag 之后，输出干净多了。
