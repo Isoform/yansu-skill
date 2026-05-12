@@ -9,7 +9,7 @@
 
 <br>
 
-**Bespoke context, delivered to your agent. No prompts. No re-introductions.**
+**Bespoke context, delivered to your agent. Prompt once, never re-introduce yourself.**
 
 [Yansu](https://yansu.app) listens, crystallizes, and quietly builds. **Yansu.skill** is how that crystallized knowledge reaches whichever agent you happen to be using — so it walks in already knowing how you actually work.
 
@@ -58,9 +58,9 @@ This is not role-play. This is continuity.
 
 Your agent inherits everything Yansu has crystallized — every conversation, decision, hesitation, and pattern. Already structured, already tagged, already yours. The knowledge that used to live only in your head now lives wherever your agent does.
 
-### No Prompt
+### No Re-introduction
 
-Your agent stops asking. It already knows your tools, your workflows, the gotchas you've paid for. Say *"help me ship the thing"* and it knows what the thing is. Say *"the bug from last week"* and it knows which bug.
+You still prompt your agent — you just stop re-explaining yourself. The agent already knows your tools, your workflows, the gotchas you've paid for. Say *"help me ship the thing"* and it knows what the thing is. Say *"the bug from last week"* and it knows which bug.
 
 ### Distraction Free
 
