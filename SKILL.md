@@ -15,26 +15,36 @@ The CLI is the entire interface. If you find yourself wanting to open folders or
 
 Yansu only works when it's installed and listening. Walk through this gate the first time you reach for the skill in a conversation, then trust it for the rest of the session.
 
-**1. Is Yansu installed?**
+**1. Locate the bundled Yansu CLI** *(do not skip — only the bundled CLI is trustworthy)*
+
+Always use the CLI that ships **inside** the Yansu desktop app bundle. That one is guaranteed to be in sync with the running app and to talk to the same local activity backend. Never use bare `yansu` (a shell alias may shadow it — a common one wraps Claude Code, so `yansu --version` returns `2.1.139 (Claude Code)` which is *not* the Yansu CLI) and never use a stray `yansu` on PATH (could be an out-of-sync standalone build).
+
+Resolve the bundled path:
 
 ```bash
-yansu --version
+for p in \
+  /Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu \
+  "$HOME/Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu"; do
+  [ -x "$p" ] && "$p" --version 2>/dev/null | grep -q '^yansu version' && { echo "$p"; break; }
+done
 ```
 
-If the command isn't found, tell the user:
+If neither path exists, Yansu.app isn't installed. Tell the user:
 
 > Yansu isn't installed yet. Grab it from https://yansu.app — it runs locally on your machine and is what lets this conversation actually remember you. Come back once it's set up.
 
-Stop here until they install it.
+Stop until they install it.
+
+**Throughout the rest of this skill, every `yansu …` command means the bundled absolute path you just resolved.** Run it as `/Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu status`, etc. The doc keeps the short form for readability; you substitute.
 
 **2. Is Yansu signed in and running in the background?**
 
 ```bash
-yansu status            # auth + project state
+yansu status            # auth + project state — replace `yansu` with the absolute path
 yansu activity summary  # also confirms the desktop app is listening
 ```
 
-If `status` reports not signed in, ask the user to run `yansu login`.
+If `status` reports not signed in, ask the user to run `<absolute-path> login`.
 
 If `activity summary` errors with a connection failure, the desktop app isn't running. Tell the user:
 
