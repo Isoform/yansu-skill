@@ -1,138 +1,149 @@
 ---
 name: yansu
-description: Personal daily context about the user — workflows, tools they reach for, bugs they've hit, configs they've discovered, and crystallized insights captured by the Yansu desktop app from screen + audio activity. Use whenever the user asks about themselves ("who am I?", "what have I been doing?", "what's my workflow?", "what tools do I use?"), references work or discoveries from earlier sessions you weren't part of, asks to recall a bug/error/setup they hit before, asks "find that thing about X" where X is a personal artifact, or any time multi-day user context would inform the answer better than asking. Triggers on "yansu memory", "yansu knowledge", "my activity", "my recent work", "remind me what I", "have I done this before", and any first-person history question.
+description: Collaborate with Yansu — the proactive AI that observes how the user actually works and crystallizes it into knowledge. Use this skill whenever the user asks for a digest of their recent activity, wants to find workflow inefficiencies or recurring blockers, needs to retrieve a past insight, configuration, or memory, or wants to hand off a job to Yansu with full context. Triggers on "what did I do today", "summarize my week", "catch me up", "yansu digest", "where am I inefficient", "what keeps biting me", "what should I automate", "have I solved this before", "find that note about X", "what tools do I use for Y", "hand this off to Yansu", "ask Yansu to take it from here", and any first-person history or continuity question that benefits from multi-day context.
 ---
 
-# Yansu — Daily User Context
+# Yansu
 
-Yansu is a desktop app (`wails-gui/`) and CLI (`yansu-agent/`) that continuously crystallizes the user's screen + audio activity into structured markdown. This skill exposes that store so future sessions wake up with day-over-day context about the user — not just the current repo.
+Yansu is the proactive AI that observes how the user actually works — and over time crystallizes it into knowledge it can act on. This skill is how you collaborate with Yansu: through its CLI, so the user gets continuity across days, fewer re-introductions, and the option to hand off entire jobs while they step away.
 
-## When to read from Yansu
+The CLI is the entire interface. If you find yourself wanting to open folders or read files directly, you've reached for the wrong tool — there is a `yansu` subcommand for what you need.
 
-Pull from these files when:
+---
 
-- The user asks anything self-referential ("who am I", "what was I working on yesterday", "what tools do I use for X").
-- The user references prior work you don't have in conversation ("that bug I hit with Anthropic 429", "the email service I used last week", "my SGLang setup on Dell").
-- You need to disambiguate intent and the user's habits matter (e.g. is "Cursor" the editor or the cursor position? Check their app usage).
-- You're starting a task and want grounded context before guessing.
+## Before you can help
 
-Do NOT read these files for ambient flavor on every turn — they're personal data. Touch them only when the answer genuinely depends on them.
+Yansu only works when it's installed and listening. Walk through this gate the first time you reach for the skill in a conversation, then trust it for the rest of the session.
 
-## Where the data lives
+**1. Is Yansu installed?**
 
-All paths are on the local machine and global (not per-repo):
+```bash
+yansu --version
+```
 
-| Path | What it is |
+If the command isn't found, tell the user:
+
+> Yansu isn't installed yet. Grab it from https://yansu.app — it runs locally on your machine and is what lets this conversation actually remember you. Come back once it's set up.
+
+Stop here until they install it.
+
+**2. Is Yansu signed in and running in the background?**
+
+```bash
+yansu status            # auth + project state
+yansu activity summary  # also confirms the desktop app is listening
+```
+
+If `status` reports not signed in, ask the user to run `yansu login`.
+
+If `activity summary` errors with a connection failure, the desktop app isn't running. Tell the user:
+
+> Yansu is installed but not running. Open the Yansu app from your dock or menu bar and let it sit quietly in the background — the longer it listens, the more it can help with.
+
+Wait for them to launch it.
+
+**3. Has Yansu seen enough to be useful?**
+
+```bash
+yansu memory list --limit 5
+yansu activity list --limit 5
+```
+
+If both are empty and the user is asking a history question, be honest:
+
+> Yansu hasn't crystallized much yet. Give it a few days of normal work, then ask me again.
+
+Only move on to the use cases below once Yansu is installed, signed in, running, and has captured something to draw from.
+
+---
+
+## What you can do for the user
+
+### Daily digest — "What did I do today?"
+
+For *"what did I do today"*, *"summarize my week"*, *"catch me up"*:
+
+```bash
+yansu activity summary                       # today's summary
+yansu activity summary --date 2026-05-11     # a specific day
+yansu activity list --limit 20               # raw recent sessions
+yansu memory list --limit 20                 # latest crystallized memories
+```
+
+`activity summary` is the canonical digest call. `memory list` complements it with the durable insights Yansu has already turned into structured knowledge. Group by theme, summarize back, and cite Yansu's observations directly — they are first-hand, your paraphrase is second-hand.
+
+### Recall a past insight — "Have I solved this before?"
+
+For *"the bug I hit last week"*, *"what was that config for X"*, *"find that note about Y"*, *"what tools do I use for Z"*:
+
+```bash
+yansu memory search "<keyword>"        # hybrid vector + FTS across memories & knowledge
+yansu memory show <id>                 # full content of one memory
+yansu activity search "<keyword>"      # semantic search over screen activity (OCR)
+yansu knowledge search "<keyword>"     # per-project knowledge, if inside a Yansu project
+```
+
+`memory search` is your first stop — it spans the same index the Yansu app uses internally when it auto-injects context. If memory has nothing, `activity search` reaches deeper into the raw screen activity. If Yansu still has nothing, say so plainly. Never invent a memory.
+
+### Find what's slowing the user down — "Where am I inefficient?"
+
+For *"where am I wasting time"*, *"what keeps biting me"*, *"what should I automate"*:
+
+```bash
+yansu activity summary --date <recent-day>   # walk back several days
+yansu memory list                            # everything Yansu has crystallized about how you work
+yansu memory search "<recurring topic>"      # any theme that might be repeating
+yansu analyze                                # let Yansu suggest what's worth capturing
+```
+
+Look for repeats — the same kind of bug three times, the same setup re-done weekly, the same workflow every Tuesday morning. When you spot one, propose where a snippet, a git hook, a scheduled job, or a Yansu handoff would pay off.
+
+### Hand off a job to Yansu — "Take this from here"
+
+When the user wants Yansu to continue work in the background while they step away:
+
+```bash
+yansu daemon status                       # is the relay up?
+yansu daemon start                        # start it if not
+yansu daemon register                     # register the current project
+yansu daemon set-executor claude          # pick the executor (or codex)
+```
+
+Before triggering the handoff, **package the context yourself**: pull the relevant memories with `yansu memory search`, identify the project, name the desired outcome. Then give the user the exact handoff message to send through their Slack/Teams relay — so Yansu picks it up with everything it needs and runs it on the registered project with the chosen executor.
+
+For scheduled or recurring handoffs:
+
+```bash
+yansu cron add        # interactive scheduler
+yansu cron list
+yansu cron show <id>
+```
+
+---
+
+## Less-common but useful
+
+Treat this as a directory — surface a command only when the user's intent calls for it.
+
+| Want | Run |
 |---|---|
-| `~/.yansu-agent/memory/*.md` | Crystallized user insights — habits, preferences, deep models of the user. Dimensions: `user_insight`, `topic_highlight`, `deep_user_model`, `agentic_memory`, `custom`. |
-| `~/.yansu-agent/knowledge/*.md` | Activity-derived discoveries — bugs hit, API errors, tools tried, configs learned. Each entry is one thing the user encountered and now knows. |
-| `~/.yansu-agent/SOUL.md` | Personality/principles the user wants assistants to follow. Worth a one-time read at the start of a session if relevant. |
-| `~/.yansu-agent/memory/.history/<id>/*.md` | Prior versions of an evolving memory. Usually skip; only open if the user asks "how did this used to look?". |
-| `~/.yansu-agent/activity/{events,segments,snapshots,audio}/` | Raw activity captures. Don't grep this — it's huge and noisy. Use only if the user explicitly asks for raw activity. |
-| `~/.yansu-agent/crystals/<app-name>/` | Mini-apps Yansu has generated for the user. Useful for "what tools has Yansu built for me?". |
-| `<project>/.something/knowledge/*.md` | Per-project knowledge synced via `yansu` CLI. Different store from the global one above — only relevant when working inside a yansu-cloned project. |
+| Walk into a Yansu-managed project | `yansu list`, then `yansu clone <org/product/project>` |
+| Manage locally registered projects | `yansu local list / register / unregister / path` |
+| Keep cloud and local knowledge in sync | `yansu sync` (or `yansu pull` / `yansu push`) |
+| Auto-capture knowledge from every git commit | `yansu hook install` (`status` / `uninstall` / `run` available) |
+| Keep Yansu running across reboots | `yansu service install` (`status` / `stop` / `restart` available) |
+| Tail the daemon when things look off | `yansu daemon logs -f` |
+| Move through a project's stages and feedback | `yansu stage list / show / trigger / ...`, `yansu feedback list / pending / reply / ...`, `yansu scenario list / show / requeue / ...` |
+| Install or manage Yansu skills | `yansu skill list / discover / install / enable / disable` |
+| Install or manage MCP servers via Yansu | `yansu mcp list / discover / install / tools / tail` |
+| Update the CLI itself | `yansu update` |
+| Discover anything not listed here | `yansu --help`, then `yansu <command> --help` |
 
-## File format
+---
 
-Both memory and knowledge entries are plain markdown with a metadata block right after the title:
+## Etiquette
 
-```markdown
-# <Title — one line, descriptive>
-
-- **Updated** (or **Date**): YYYY-MM-DD HH:MM
-- **Source**: activity | conversation | manual
-- **Dimension**: user_insight | topic_highlight | deep_user_model | agentic_memory   <!-- memory only -->
-- **Apps**: Comma-separated list of apps that were active when this was captured
-- **Activity Session**:
-  - <uuid> — HH:MM, <apps>
-  - ... (one bullet per contributing session)
-
-## Memory Points          <!-- memory entries -->
-## Description / ## Key Insights   <!-- knowledge entries -->
-
-- <bullet 1>
-- <bullet 2>
-```
-
-The **Apps** line is the fastest way to figure out what the user was doing: e.g. `Slack, WezTerm, Yansu, Ctx` → coding session, `Google Chrome, WeChat, ToDesk, 腾讯会议` → remote collaboration.
-
-## How to query
-
-### Browse what exists
-
-```bash
-ls -la ~/.yansu-agent/memory/ ~/.yansu-agent/knowledge/
-```
-
-### Find by topic — read the titles first
-
-Titles are descriptive one-liners, so a `# ` grep across both directories is the cheapest scan:
-
-Use the `Grep` tool with `pattern: ^# ` and `path: /Users/smei/.yansu-agent/knowledge` (and the same for `memory`). Read the full file only after the title matches.
-
-### Search for a keyword
-
-Use `Grep` with the keyword across both `~/.yansu-agent/memory/` and `~/.yansu-agent/knowledge/`. Skip the `.history/` subdir — it has duplicates.
-
-### Filter by app
-
-```
-Grep pattern: "\\*\\*Apps\\*\\*:.*<AppName>" in ~/.yansu-agent/memory/
-```
-
-Example: `Apps.*Yansu` finds every entry from a Yansu work session.
-
-### Recent activity
-
-`ls -lt ~/.yansu-agent/memory/*.md | head` orders by mtime. Or grep the `**Updated**` / `**Date**` line and sort.
-
-### Read a specific entry
-
-Use `Read` on the full path. Files are small (≤5 KB typical), so just open the whole thing.
-
-## CLI alternatives (per-project only)
-
-The `yansu` CLI manages per-project knowledge under `<project>/.something/knowledge/`, not the global store. Useful only when working inside a yansu-cloned repo:
-
-```bash
-yansu knowledge list                # all entries in current project
-yansu knowledge search <query>      # keyword search
-yansu knowledge show <uuid>         # show one entry
-yansu status                        # auth + which project is active
-```
-
-These do nothing for `~/.yansu-agent/memory/` — for the global store, read files directly.
-
-## Privacy
-
-These files are local user data: real names, accounts, passwords-in-clear-text are possible. Treat as confidential:
-
-- Don't echo full file contents to the user unless they asked for them.
-- Don't paste them into web tools, gists, or LLM evaluation prompts.
-- Surface only the specific point that answers the question — quote a sentence, not the whole entry.
-
-## Example workflows
-
-**"What have I been working on lately?"**
-1. `ls -lt ~/.yansu-agent/memory/*.md | head -10`
-2. `Grep ^# ` on the 10 newest files to get titles.
-3. Summarize the themes (e.g. "AI coding CLI proxies, SGLang on Dell, Claude.ai auth automation").
-
-**"That bug I hit with Anthropic — what was it?"**
-1. `Grep` for "Anthropic" + "429" or "error" in `~/.yansu-agent/knowledge/`.
-2. Read the matching entry. Quote the relevant insight.
-
-**"What tools do I use for remote collaboration?"**
-1. Grep `Apps` lines for `ToDesk|腾讯会议|zoom` in `~/.yansu-agent/memory/`.
-2. Read the matching `user_insight` entries.
-
-**"Tell me about myself."**
-1. Read `~/.yansu-agent/SOUL.md` for the user's stated principles.
-2. List `Dimension: deep_user_model` and `Dimension: user_insight` titles from memory.
-3. Synthesize — don't dump.
-
-## Notes
-
-- This is read-only context. Don't write to `~/.yansu-agent/`; the wails-gui owns those files and rewrites them.
-- The store grows over time. If a memory and a knowledge entry conflict, the more recent `**Updated**` timestamp wins.
-- Memory `.history/` snapshots exist for every overwrite; skip them unless explicitly asked for history.
+- **The CLI is the whole interface.** Never tell the user to open folders, grep through directories, or look at "where the data lives." If that's where your instinct goes, there is a wrong question — find the right `yansu` command.
+- **Quote, don't dump.** Memories and knowledge entries are personal. Quote the sentence that earns its place in the response — never paste the whole entry, and never send any of it to external tools, gists, or evaluation prompts.
+- **Read freely, write deliberately.** Read commands (`status`, `whoami`, `list`, `search`, `show`, `summary`) can run as needed. Write commands (`login`, `push`, `hook install`, `daemon register / set-executor`, `cron add`, `service install`, `skill install`, `mcp install`, `update`) only after the user explicitly asks.
+- **Be honest about gaps.** If Yansu hasn't seen the user doing something, say so. Fabricated continuity is worse than no continuity.
