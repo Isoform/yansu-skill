@@ -17,7 +17,7 @@
 
 <br>
 
-**安装** —— 把下面这段粘给你的 AI Agent（Claude、Codex、Cursor 都行）：
+**安装** —— 把下面这段粘给你的 AI Agent：
 
 </div>
 
@@ -25,10 +25,8 @@
 帮我安装 Yansu skill：
 
 1. 抓取 https://raw.githubusercontent.com/Isoform/yansu-skill/main/SKILL.md
-2. 保存到你的用户级 skills 目录，路径为 `yansu/SKILL.md`
-   （例如 Claude Code 用 `~/.claude/skills/yansu/SKILL.md`，
-   Codex 用 `~/.codex/skills/yansu/SKILL.md`，
-   Cursor 用 `~/.cursor/skills/yansu/SKILL.md`）
+2. 保存到你自己的用户级 skills 目录下，路径为 `yansu/SKILL.md`
+   （也就是你在这台机器上读取 skills 的那个目录）。
 3. 装完确认一下安装路径。
 ```
 

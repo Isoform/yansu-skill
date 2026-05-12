@@ -17,7 +17,7 @@
 
 <br>
 
-**Install** — paste this to your AI agent (Claude, Codex, Cursor, …):
+**Install** — paste this to your AI agent:
 
 </div>
 
@@ -25,10 +25,8 @@
 Install the Yansu skill for me:
 
 1. Fetch https://raw.githubusercontent.com/Isoform/yansu-skill/main/SKILL.md
-2. Save it to your user-level skills folder as `yansu/SKILL.md`
-   (e.g. `~/.claude/skills/yansu/SKILL.md` for Claude Code,
-   `~/.codex/skills/yansu/SKILL.md` for Codex,
-   `~/.cursor/skills/yansu/SKILL.md` for Cursor)
+2. Save it under your own user-level skills directory as `yansu/SKILL.md`
+   (whatever path your agent reads skills from on this machine).
 3. Confirm the install path when done.
 ```
 

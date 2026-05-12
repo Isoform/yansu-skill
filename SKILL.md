@@ -17,7 +17,7 @@ Yansu only works when it's installed and listening. Walk through this gate the f
 
 **1. Locate the bundled Yansu CLI** *(do not skip — only the bundled CLI is trustworthy)*
 
-Always use the CLI that ships **inside** the Yansu desktop app bundle. That one is guaranteed to be in sync with the running app and to talk to the same local activity backend. Never use bare `yansu` (a shell alias may shadow it — a common one wraps Claude Code, so `yansu --version` returns `2.1.139 (Claude Code)` which is *not* the Yansu CLI) and never use a stray `yansu` on PATH (could be an out-of-sync standalone build).
+Always use the CLI that ships **inside** the Yansu desktop app bundle. That one is guaranteed to be in sync with the running app and to talk to the same local activity backend. Never use bare `yansu` (it may be a shell alias or function pointing at an unrelated tool, so a bare `--version` check is not reliable) and never use a stray `yansu` on PATH (could be an out-of-sync standalone build).
 
 Resolve the bundled path:
 
