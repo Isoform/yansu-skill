@@ -24,37 +24,35 @@ One install, and your agent stops being a stranger.
 ## See it in action
 
 ```
-You      ❯ I need to debug that Anthropic 429 thing again
+You      ❯ Why did that build fail again — the auth one?
 
-Agent    ❯ The May 6 one — DAILY_LIMIT_EXCEEDED, not a transient
-           rate limit. You retried it and the handoff entered a
-           loop because the daily cap had already triggered.
-           I'll skip the retry and check the dashboard first.
+Agent    ❯ Same migration-lock issue from a few weeks back. You
+           worked around it last time by running the ALTER inside
+           a transaction with statement_timeout off. Want me to
+           apply that recipe?
 ```
 
 ```
-You      ❯ Set up SGLang on the Dell box
+You      ❯ Spin up the staging database
 
-Agent    ❯ You've done this before. You usually proxy the wheels
-           through Vultr because Dell's network is slow, and you
-           serve DeepSeek through the systemd unit with the -backup
-           naming convention. Want me to start from that snapshot?
+Agent    ❯ You've done this twice. Your compose template lives
+           next door, and the first boot usually trips on the SSL
+           cert path. Starting from your last-known-good and
+           watching for the cert thing.
 ```
 
 ```
-You      ❯ Who am I, again?
+You      ❯ Pick the right tool for the job
 
-Agent    ❯ A backend-leaning founder who codes in Go, ships through
-           Wails for desktop and TipTap on the web, and treats AI
-           coding CLIs (Claude, Codex, Gemini) as a single fleet
-           you're constantly unifying. You don't like flash. You
-           reach for terracotta accents and warm neutrals. You
-           prefer terse responses with no trailing summaries.
+Agent    ❯ For this kind of task you usually reach for the same
+           three. The first one fits the shape of the problem,
+           and you've been getting cleaner output out of it since
+           you tuned the flags last week.
 ```
 
 Without Yansu.skill, every conversation starts from zero. Your agent doesn't know your tools, your habits, the gotchas you've already paid for. You re-explain. Every. Single. Time.
 
-With Yansu.skill, your agent walks in knowing the version of you that worked yesterday. It cites the bug by its date because it actually remembers. It picks the tool you already use because it knows your stack. It skips the obvious because the obvious is what you taught it last week.
+With Yansu.skill, your agent walks in knowing the version of you that worked yesterday. It cites the bug because it actually remembers. It picks the tool you already use because it knows your stack. It skips the obvious because the obvious is what you taught it last week.
 
 This is not role-play. This is continuity.
 
@@ -88,7 +86,7 @@ Your agent stops asking and starts knowing.
 
 ## Why it works
 
-Other tools forget you the moment you close the tab. They greet you fresh every morning, and you re-introduce yourself with the same paragraph: *"I work on Yansu, the backend is Go, I use these tools, watch out for these gotchas..."*
+Other tools forget you the moment you close the tab. They greet you fresh every morning, and you re-introduce yourself with the same paragraph: *"Here's what I'm building. Here are my tools. Here are the gotchas. Here's how I like to be helped."*
 
 Yansu has been listening all along — to your screen, to your voice memos, to the apps you open and close. It has been quietly building a portrait of you. Not to surveil. To serve.
 
