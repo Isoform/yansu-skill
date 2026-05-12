@@ -65,7 +65,7 @@ For *"what did I do today"*, *"summarize my week"*, *"catch me up"*:
 
 ```bash
 yansu activity summary                       # today's summary
-yansu activity summary --date 2026-05-11     # a specific day
+yansu activity summary --date YYYY-MM-DD     # a specific day
 yansu activity list --limit 20               # raw recent sessions
 yansu memory list --limit 20                 # latest crystallized memories
 ```
