@@ -17,7 +17,19 @@
 
 <br>
 
-**Install** — paste this to your AI agent:
+**Install as a Codex plugin** — enables `/yansu`:
+
+</div>
+
+```
+codex plugin marketplace add Isoform/yansu-skill
+```
+
+Restart Codex, install or enable the **Yansu** plugin from that marketplace, then use `/yansu ...`.
+
+<div align="center">
+
+**Skill-only install** — for agents without Codex plugin support:
 
 </div>
 

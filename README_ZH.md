@@ -17,7 +17,19 @@
 
 <br>
 
-**安装** —— 把下面这段粘给你的 AI Agent：
+**作为 Codex 插件安装** —— 启用 `/yansu`：
+
+</div>
+
+```
+codex plugin marketplace add Isoform/yansu-skill
+```
+
+重启 Codex，从这个 marketplace 安装或启用 **Yansu** 插件，然后使用 `/yansu ...`。
+
+<div align="center">
+
+**仅安装 Skill** —— 适用于不支持 Codex 插件的 Agent：
 
 </div>
 
