@@ -1,0 +1,20 @@
+{
+  "name": "yansu-skill",
+  "interface": {
+    "displayName": "Yansu Skill"
+  },
+  "plugins": [
+    {
+      "name": "yansu",
+      "source": {
+        "source": "local",
+        "path": "./plugins/yansu"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

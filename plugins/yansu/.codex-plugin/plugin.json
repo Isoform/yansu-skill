@@ -1,0 +1,42 @@
+{
+  "name": "yansu",
+  "version": "0.1.0",
+  "description": "Bring Yansu continuity into Codex with the /yansu slash command and bundled Yansu skill.",
+  "author": {
+    "name": "Isoform",
+    "email": "support@yansu.app",
+    "url": "https://github.com/Isoform"
+  },
+  "homepage": "https://yansu.app",
+  "repository": "https://github.com/Isoform/yansu-skill",
+  "license": "MIT",
+  "keywords": [
+    "yansu",
+    "memory",
+    "continuity",
+    "skills",
+    "slash-command"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Yansu",
+    "shortDescription": "Personal continuity for Codex through Yansu memory and activity.",
+    "longDescription": "Yansu observes how you work, crystallizes useful patterns into local knowledge, and gives Codex a /yansu command for recalling relevant memory, activity, and workflow context when a request needs continuity.",
+    "developerName": "Isoform",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "websiteURL": "https://yansu.app",
+    "privacyPolicyURL": "https://yansu.app/privacy",
+    "termsOfServiceURL": "https://yansu.app/terms",
+    "defaultPrompt": [
+      "What did I do today?",
+      "Have I solved this before?",
+      "Where am I wasting time?"
+    ],
+    "brandColor": "#D4603A",
+    "screenshots": []
+  }
+}
