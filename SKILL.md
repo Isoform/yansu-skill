@@ -19,23 +19,57 @@ Yansu only works when it's installed and listening. Walk through this gate the f
 
 Always use the CLI that ships **inside** the Yansu desktop app bundle. That one is guaranteed to be in sync with the running app and to talk to the same local activity backend. Never use bare `yansu` (it may be a shell alias or function pointing at an unrelated tool, so a bare `--version` check is not reliable) and never use a stray `yansu` on PATH (could be an out-of-sync standalone build).
 
-Resolve the bundled path:
+Resolve the bundled path by trying these in order — stop at the first one that produces a path whose `--version` starts with `yansu version`:
+
+**a. Discovery file written by the desktop app on every launch** *(canonical — works on every platform, including Windows portable installs)*
+
+The app drops an `install.json` marker into the OS's per-user config dir on startup. Read it and use the `cli` field (fall back to `cliInstalled` if `cli` is missing).
 
 ```bash
-for p in \
-  /Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu \
-  "$HOME/Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu"; do
-  [ -x "$p" ] && "$p" --version 2>/dev/null | grep -q '^yansu version' && { echo "$p"; break; }
-done
+# macOS
+cat "$HOME/Library/Application Support/Yansu/install.json"
+# Linux
+cat "${XDG_CONFIG_HOME:-$HOME/.config}/Yansu/install.json"
+# Windows (bash / Git Bash / MSYS)
+cat "$APPDATA/Yansu/install.json"
+# Windows (PowerShell)
+Get-Content "$env:APPDATA\Yansu\install.json"
 ```
 
-If the snippet prints nothing, the bundled CLI is missing, which means **Yansu.app is not installed on this machine**. Tell the user exactly that and point them at the download:
+Parse the JSON. Use `.cli` if present and executable; otherwise `.cliInstalled`. The schema is additive — ignore any field you don't recognize.
 
-> Yansu.app isn't installed on this machine. Download it from **https://yansu.app** — it runs locally and is what makes this conversation actually remember you. Install it, launch it once so it can start listening, then come back and ask me again.
+**b. Hard-coded macOS bundle paths** *(legacy fallback for installs that predate the discovery file)*
+
+```bash
+/Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu
+$HOME/Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu
+```
+
+**c. Running process** *(works if the app is up but the discovery file is missing or stale)*
+
+If the desktop app is already running, derive the CLI path from the live process — no install-location guessing needed:
+
+```bash
+# macOS / Linux
+ps_path=$(ps -eo pid,comm,args | awk '$2 ~ /Yansu/ || $3 ~ /Yansu/ {print $3; exit}')
+# Then look for: "$(dirname "$ps_path")/yansu-cli-bundle/bin/yansu"
+```
+
+```powershell
+# Windows
+$app = (Get-Process Yansu -ErrorAction SilentlyContinue | Select-Object -First 1).Path
+# Then look for: "$(Split-Path $app)\yansu-cli-bundle\bin\yansu.exe"
+```
+
+---
+
+If every step fails, the bundled CLI is missing or the app isn't running. Tell the user:
+
+> Yansu.app isn't installed (or isn't running) on this machine. Download it from **https://yansu.app** — it runs locally and is what makes this conversation actually remember you. Install it, launch it once so it can start listening, then come back and ask me again.
 
 Then stop. Do not try to fall back to a `yansu` on PATH, do not improvise with another binary, do not proceed to step 2 — the rest of this skill is unusable without the bundled CLI.
 
-**Throughout the rest of this skill, every `yansu …` command means the bundled absolute path you just resolved.** Run it as `/Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu status`, etc. The doc keeps the short form for readability; you substitute.
+**Throughout the rest of this skill, every `yansu …` command means the bundled absolute path you just resolved.** Run it as `/Applications/Yansu.app/Contents/Resources/yansu-cli-bundle/bin/yansu status` (or the Windows equivalent under wherever you extracted the portable zip), etc. The doc keeps the short form for readability; you substitute.
 
 **2. Is Yansu signed in and running in the background?**
 
